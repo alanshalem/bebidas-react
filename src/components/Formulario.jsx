@@ -1,10 +1,15 @@
 // Importamos useContext para poder hacer uso del context que creamos
 import { useContext, useState } from "react";
 import { CategoriasContext } from "../context/CategoriasContext";
+import { RecetasContext } from "../context/RecetasContext";
+
 const Formulario = () => {
 	// Obtenemos el context del provider que creamos
 	const { categorias, guardarCategorias } = useContext(CategoriasContext);
-	console.log(categorias);
+	const { buscarRecetas, guardarConsultar } = useContext(RecetasContext);
+	// Logueamos el state del context
+	// console.log(categorias);
+	// console.log(buscarRecetas);
 
 	// State del componente
 	const [busqueda, guardarBusqueda] = useState({
@@ -24,7 +29,14 @@ const Formulario = () => {
 	};
 
 	return (
-		<form className='col-12'>
+		<form
+			className='col-12'
+			onSubmit={(e) => {
+				e.preventDefault();
+				buscarRecetas(busqueda);
+				guardarConsultar(true);
+			}}
+		>
 			<fieldset>
 				<legend>Busca bebidas por su Categoría o Ingrediente</legend>
 			</fieldset>
